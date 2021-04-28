@@ -4,6 +4,7 @@ const morgan = require('morgan');;
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
 
+app.use(express.static(__dirname + '/public'));
 
 let topMooBees = [
     {
