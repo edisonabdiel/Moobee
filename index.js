@@ -99,6 +99,17 @@ let actors = [
 
 ];
 
+let users = [
+    {
+        name: "Peter Pan",
+        username: "@peter_pan",
+    },
+    {
+        name: "Count Dracula",
+        username: "@the.real.count.dracula",
+    }
+];
+
 // Loggin
 app.use(morgan('common'));
 
@@ -150,7 +161,7 @@ app.get('/topMooBees/:directors', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-    res.json(user);
+    res.json(users);
 });
 
 app.get('/users:username', (req, res) => {
@@ -175,6 +186,16 @@ app.post('/users/:username/favorites', (req, res) => {
 
 app.delete('/users/:username/favorites/:movie', (req, res) => {
     res.send("remove from favorites")
+});
+
+app.delete('/users/:username',(req,res)=>{
+    res.send('user was deleted')
+});
+
+// PUT requests
+
+app.put('users/:username', (req, res) => {
+    res.send('user name has been updated')
 });
 
 // Listen for requests
