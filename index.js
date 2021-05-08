@@ -8,9 +8,11 @@ app.use(express.static(__dirname + '/public'));
 
 let topMooBees = [
     {
-        title: "Bram Stoker's Dracula",
-        director: 'Francis Ford Coppola',
-        genre: 'Neo-Noir Thriller'
+        title: "Punch-Drunk Love",
+        director: "Paul Thomas Anderson",
+        genre: ["Drama"],
+        description: "A frustrated Barry Egan calls a phone-sex line to curb his loneliness. Little does he know that he will land in huge trouble and will also jeopardise his relationship with Lena.",
+        imgUrl: 'https://m.media-amazon.com/images/M/MV5BYmE1OTY4NjgtYjcwNC00NWE4LWJiNGMtZmVhYTdlMWE1YzIxXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg'
     },
     {
         title: 'There Will Be Blood',
@@ -63,13 +65,13 @@ let directors = [
     {
         name: "Quentin Tarantino",
         bio: "Quentin Tarantino is an American film director, screenwriter, producer, and actor. His films are characterized by nonlinear storylines, dark humor, aestheticization of violence, extended scenes of dialogue, ensemble casts, references to popular culture and a wide variety of other films, eclectic soundtracks primarily containing songs and score pieces from the 1960s to the 1980s, alternate history, and features of neo-noir film.",
-        born: "March 27, 1963"
+        born: "1963-03-27"
 
     },
     {
-        name: "Martin Scorsese",
-        bio: "Martin Scorses is an American film director, producer, screenwriter, and actor. One of the major figures of the New Hollywood era, he is widely regarded as one of the most significant and influential directors in film history.",
-        born: "November 17, 1942"
+        name: "Paul Thomas Anderson",
+        bio: "He was one of the first of the video store generation of film-makers. His father was the first man on his block to own a V.C.R., and from a very early age Anderson had an infinite number of titles available to him.",
+        born: "1970-06-26"
     },
     {
         name: "Alfred Hitchcock",
@@ -102,12 +104,13 @@ let actors = [
 
 let users = [
     {
-        name: "Peter Pan",
-        username: "@peter_pan",
+        name: "Kenny Bell",
+        username: "@kenny_bell",
+        Birthday: new Date("1991-09-20")
     },
     {
-        name: "Count Dracula",
-        username: "@the.real.count.dracula",
+        favouriteMovie: ObjectId("6094eb3378af87dbecf35d07"),
+        username: ObjectId("6093f4d478af87dbecf35cf9")
     }
 ];
 
@@ -134,7 +137,7 @@ app.get('/mooBees/:title', (req, res) => {
 app.get('/mooBees/:genre', (req, res) => {
     res.json(mooBees.find((moobee) => { return moobee.genre === req.params.genre }));
 });
-
+ 
 app.get('/directors', (req, res) => {
     res.json(directors);
 
