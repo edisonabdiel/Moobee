@@ -8,8 +8,8 @@ const Models = require('./models');
 
 const Movies = Models.Movie;
 const Users = Models.User;
-const Directors = Models.Directors;
-const Genre = Models.Genres;
+const Directors = Models.Director;
+const Genres = Models.Genre;
 
 app.use(express.static(__dirname + '/public'));
 
@@ -57,7 +57,7 @@ app.get('/movies/:genre', (req, res) => {
         .catch((err) => {
             console.error(err);
             res.status(500).send('Error: ' + err)
-    })
+        });
 });
 
 app.get('/directors/:name', (req, res) => {
@@ -71,8 +71,37 @@ app.get('/directors/:name', (req, res) => {
         });
 });
 
-app.get('/actors', (req, res) => {
-    res.json(actors);
+app.get('/directors', (req, res) => {
+    Directors.find()
+        .then((director) => {
+            res.status(201).json(director);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error' + err)
+        });
+});
+
+app.get('/genres', (req, res) => {
+    Genres.find()
+        .then((genre) => {
+            res.status(201).json(genre);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error' + err)
+        });
+});
+
+app.get('/genres/:name', (req, res) => {
+    Genres.findOne({ name: req.params.name })
+        .then((genre) => {
+            res.json(genre);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error' + err)
+        });
 });
 
 app.get('/users', (req, res) => {
