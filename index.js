@@ -6,7 +6,11 @@ const mongoose = require('mongoose');
 const Models = require('./models');
 
 const app = express();
-app.use(bodyParser.json());
+
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -137,7 +141,7 @@ app.get('/users/:username/favorites', (req, res) => {
 app.post('/users', (req, res) => {
     Users.findOne({ username: req.body.username })
         .then((user) => {
-            if (user) { return res.status(400).send(req.body.username + "already exists") }
+            if (user) { return res.status(400).send(req.body.username + " already exists") }
             else {
                 Users.create({
                     name: req.body.name,
