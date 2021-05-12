@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 app.get('/documentation', (req, res) => {
     res.sendFile('public/documentation.html', { root: __dirname });
 });
-
+//Return a list of ALL movies to the user
 app.get('/movies', (req, res) => {
     Movies.find()
         .then((movies) => {
@@ -43,7 +43,7 @@ app.get('/movies', (req, res) => {
             res.status(500).send('Error: ' + err);
         });
 });
-
+//Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
 app.get('/movies/:title', (req, res) => {
     Movies.findOne({ title: req.params.title })
         .then((movie) => {
@@ -65,7 +65,7 @@ app.get('/movies/:genre', (req, res) => {
             res.status(500).send('Error: ' + err)
         });
 });
-
+//Return data about a director (bio, birth year, death year) by name
 app.get('/directors/:name', (req, res) => {
     Directors.findOne({ name: req.params.name })
         .then((user) => {
@@ -98,7 +98,7 @@ app.get('/genres', (req, res) => {
             res.status(500).send('Error' + err)
         });
 });
-
+//Return data about a genre (description) by name/title (e.g., “Thriller”)
 app.get('/genres/:name', (req, res) => {
     Genres.findOne({ name: req.params.name })
         .then((genre) => {
@@ -132,12 +132,8 @@ app.get('/users/:username', (req, res) => {
         });
 });
 
-app.get('/users/:username/favorites', (req, res) => {
-    res.send("list of favorites")
-});
-
 // POST requests
-
+// Allow new users to register
 app.post('/users', (req, res) => {
     Users.findOne({ username: req.body.username })
         .then((user) => {
@@ -179,11 +175,7 @@ app.post('/users/:username/Movies/:MovieID', (req, res) => {
 });
 
 // DELETE requests
-
-app.delete('/users/:username/favorites/:movie', (req, res) => {
-    res.send("remove from favorites")
-});
-
+//Allow existing users to deregister
 app.delete('/users/:username', (req, res) => {
     Users.findOneAndRemove({ username: req.params.username })
         .then((user) => {
@@ -200,7 +192,7 @@ app.delete('/users/:username', (req, res) => {
 });
 
 // PUT requests
-
+//Allow users to update their user info (username, password, email, date of birth)
 app.put('/users/:username', (req, res) => {
     Users.findOneAndUpdate({ username: req.params.username }, {
         $set:
