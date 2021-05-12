@@ -178,21 +178,6 @@ app.post('/users/:username/Movies/:MovieID', (req, res) => {
         });
 });
 
-app.post('/users/:username/movies/:MovieID', (req, res) => {
-    Users.findOneAndUpdate({ username: req.params.username }, {
-        $push: { FavoriteMovies: req.params.MovieID }
-    },
-        { new: true }, // This line makes sure that the updated document is returned
-        (err, updatedUser) => {
-            if (err) {
-                console.error(err);
-                res.status(500).send('Error: ' + err);
-            } else {
-                res.json(updatedUser);
-            }
-        });
-});
-
 // DELETE requests
 
 app.delete('/users/:username/favorites/:movie', (req, res) => {
