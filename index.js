@@ -158,8 +158,8 @@ app.post('/users', (req, res) => {
             res.status(500).send('Error:' + error)
         })
 });
-
-app.post('/users/:username/Movies/:MovieID', (req, res) => {
+//Allow users to add a movie to their list of favorites
+app.post('/users/:username/movies/:MovieID', (req, res) => {
     Users.findOneAndUpdate({ username: req.params.username }, {
         $push: { FavoriteMovies: req.params.MovieID }
     },
@@ -188,6 +188,18 @@ app.delete('/users/:username', (req, res) => {
         .catch((err) => {
             console.error(err);
             res.status(500).send('Error: ' + err);
+        });
+});
+
+app.delete('/users/:username/movies/:MovieID', (req, res) => {
+    Users.findOneAndRemove({ username: req.params.username }, 
+        (err, updatedUser) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            } else {
+                res.json(updatedUser);
+            }
         });
 });
 
