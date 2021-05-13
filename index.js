@@ -207,10 +207,11 @@ app.delete('/users/:username/movies/:MovieID', (req, res) => {
 
 // PUT requests
 //Allow users to update their user info (username, password, email, date of birth)
-app.put('/users/:username', (req, res) => {
-    Users.findOneAndUpdate({ username: req.params.username }, {
+app.put('/users/:_id', (req, res) => {
+    Users.findByIdAndUpdate({ _id: req.params._id }, {
         $set:
         {
+            name: req.body.name,
             username: req.body.username,
             password: req.body.password,
             email: req.body.email,
@@ -223,7 +224,7 @@ app.put('/users/:username', (req, res) => {
                 console.error(err);
                 res.status(500).send('Error: ' + err);
             } else {
-                res.json(updatedUser);
+                res.json(updatedUser).send(`The user: ${req.body.name} has been updated`);
             }
         });
 });
@@ -241,11 +242,3 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
-
-
-let us = {
-    name: "test",
-    password: "test",
-    username: "@test",
-    birthday: "1391-09-20",
-}
