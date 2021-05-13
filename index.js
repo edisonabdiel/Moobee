@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({
-  extended: true
+    extended: true
 }));
 
 const Movies = Models.Movie;
@@ -137,7 +137,7 @@ app.get('/users/:username', (req, res) => {
 app.post('/users', (req, res) => {
     Users.findOne({ username: req.body.username })
         .then((user) => {
-            if (user) { return res.status(400).send(req.body.username + " already exists") }
+            if (user) { return res.status(400).send(`Apologies, the username "${req.body.username}" has already been taken.`) }
             else {
                 Users.create({
                     name: req.body.name,
@@ -177,7 +177,7 @@ app.post('/users/:username/movies/:MovieID', (req, res) => {
 // DELETE requests
 //Allow existing users to deregister
 app.delete('/users/:username', (req, res) => {
-    Users.findOneAndRemove({ username: req.params.username })
+    Users.findOneAndDelete({ username: req.params.username })
         .then((user) => {
             if (!user) {
                 res.status(400).send(req.params.username + ' was not found');
@@ -192,13 +192,15 @@ app.delete('/users/:username', (req, res) => {
 });
 
 app.delete('/users/:username/movies/:MovieID', (req, res) => {
-    Users.findOneAndRemove({ username: req.params.username }, 
-        (err, updatedUser) => {
+    Users.findOneAndUpdate({ username: req.params.username },
+        { $pull: { FavoriteMovies: req.params.MovieID } },
+        { new: true },
+        (err, updatedFavourite) => {
             if (err) {
                 console.error(err);
                 res.status(500).send('Error: ' + err);
             } else {
-                res.json(updatedUser);
+                res.json(updatedFavourite).send('Favorite movie has been removed');
             }
         });
 });
@@ -239,3 +241,11 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
+
+
+let us = {
+    name: "test",
+    password: "test",
+    username: "@test",
+    birthday: "1391-09-20",
+}
