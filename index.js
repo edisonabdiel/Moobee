@@ -1,9 +1,11 @@
 const express = require('express');
-const morgan = require('morgan');;
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
 const mongoose = require('mongoose');
 const Models = require('./models');
+const passport = require('passport');
+require('./passport');
 
 const app = express();
 
@@ -11,6 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+
+let auth = require('./auth')(app);
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -33,7 +37,7 @@ app.get('/documentation', (req, res) => {
     res.sendFile('public/documentation.html', { root: __dirname });
 });
 //Return a list of ALL movies to the user
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
