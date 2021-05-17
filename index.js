@@ -24,21 +24,21 @@ app.use(cors({
         return callback(null, true);
     }
 }));
-
+// Body-Parser
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
-
+//Auth
 let auth = require('./auth')(app);
-
+//Models
 const Movies = Models.Movie;
 const Users = Models.User;
 const Directors = Models.Director;
 const Genres = Models.Genre;
 
 app.use(express.static(__dirname + '/public'));
-
+//Mongoose middlewar body-parser
 mongoose.connect('mongodb://localhost:27017/moobee', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Loggin
@@ -74,7 +74,7 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req
             res.status(500).send('Error: ' + err);
         });
 });
-
+//Return a movie by genre
 app.get('/movies/:genre', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.findOne({ genre: req.params.genre })
         .then((movie) => {
