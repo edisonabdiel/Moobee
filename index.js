@@ -39,7 +39,7 @@ const Genres = Models.Genre;
 
 app.use(express.static(__dirname + '/public'));
 //Mongoose middlewar body-parser
-mongoose.connect('mongodb://localhost:27017/moobee', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('process.env.CONNECTION_URI', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Loggin
 app.use(morgan('common'));
