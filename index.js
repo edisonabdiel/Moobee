@@ -39,7 +39,7 @@ const Genres = Models.Genre;
 
 app.use(express.static(__dirname + '/public'));
 //Mongoose middlewar body-parser
-mongoose.connect('process.env.CONNECTION_URI', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://EdisonAbdiel:114790931@moobee.zpfes.mongodb.net/moobee?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Loggin
 app.use(morgan('common'));
@@ -167,6 +167,7 @@ app.post('/users', [
     }
 
     let hashedPassword = Users.hashPassword(req.body.password);
+    console.log(hashedPassword);
     Users.findOne({ username: req.body.username })
         .then((user) => {
             if (user) { return res.status(400).send(`Apologies, the username "${req.body.username}" has already been taken.`) }
