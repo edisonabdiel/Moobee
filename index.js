@@ -52,8 +52,8 @@ app.get('/', (req, res) => {
 app.get('/documentation', (req, res) => {
     res.sendFile('public/documentation.html', { root: __dirname });
 });
-//Return a list of ALL movies to the user
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+//Return a list of ALL movies to the user ADD THE PASSPORT AUTH CODE AGAIN ONCE USERS THEMSELVES CAN LOG IN
+app.get('/movies', (req, res) => {
     Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
