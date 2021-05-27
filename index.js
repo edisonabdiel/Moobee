@@ -12,7 +12,7 @@ require('./passport');
 const app = express();
 
 //CORS middlewear
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234'];
 
 app.use(cors({
     origin: (origin, callback) => {
