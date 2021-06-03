@@ -39,7 +39,7 @@ const Genres = Models.Genre;
 
 app.use(express.static(__dirname + '/public'));
 //Mongoose middlewar body-parser
-mongoose.connect('mongodb://EdisonAbdiel:114790931@moobee-shard-00-00.zpfes.mongodb.net:27017,moobee-shard-00-01.zpfes.mongodb.net:27017,moobee-shard-00-02.zpfes.mongodb.net:27017/test?ssl=true&replicaSet=atlas-6ude3z-shard-0&authSource=admin&retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://EdisonAbdiel:114790931@moobee.zpfes.mongodb.net/movies?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Loggin
 app.use(morgan('common'));
