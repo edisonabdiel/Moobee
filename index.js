@@ -157,7 +157,6 @@ app.get('/users/:username', passport.authenticate('jwt', { session: false }), (r
 app.post('/users', [
     check('name', 'Apologies, name is required.').not().isEmpty(),
     check('username', 'Apologies, the username requires a minimum of 6 characters.').isLength({ min: 6 }),
-    check('username', 'Apologies, the username only allows alphanumeric characters.').isAlphanumeric(),
     check('email', 'Apologies, the entered email does not seem to be valid').isEmail(),
     check('password', 'Apologies, the password requires a minimum of 8 characters.').isLength({ min: 8 }),
 ], (req, res) => {
