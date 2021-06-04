@@ -96,8 +96,8 @@ app.get('/directors/:name', passport.authenticate('jwt', { session: false }), (r
             res.status(500).send('Error: ' + err);
         });
 });
-//Returns the full list of directors to the user
-app.get('/directors', passport.authenticate('jwt', { session: false }), (req, res) => {
+//Returns the full list of directors to the user ADD BACK THE PASSPORT AUTH
+app.get('/directors', (req, res) => {
     Directors.find()
         .then((director) => {
             res.status(201).json(director);
