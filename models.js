@@ -14,7 +14,6 @@ let userSchema = mongoose.Schema({
     password: { type: String, required: true },
     email: { type: String , required: true },
     username: { type: String, required: true },
-    birthday: Date,
     FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
 });
 
