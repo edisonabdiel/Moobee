@@ -74,6 +74,17 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req
             res.status(500).send('Error: ' + err);
         });
 });
+//Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by ID
+app.get('/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Movies.findOne({ title: req.params.title })
+        .then((movie) => {
+            res.json(movie);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
 //Return a movie by genre
 app.get('/movies/:genre', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.findOne({ genre: req.params.genre })
@@ -239,8 +250,7 @@ app.delete('/users/:username/movies/:MovieID', passport.authenticate('jwt', { se
 // PUT requests
 //Allow users to update their user info (username, password, email, date of birth)
 app.put('/users/:_id', [
-    check('name', 'Apologies, name is required.').not().isEmpty(),
-    check('lastName', 'Apologies, last name is required.').not().isEmpty(),
+    check('username', 'Apologies, username is required.').not().isEmpty(),
     check('username', 'Apologies, the username requires a minimum of 6 characters.').isLength({ min: 6 }),
     check('username', 'Apologies, the username only allows alphanumeric characters.').isAlphanumeric(),
     check('email', 'Apologies, the entered email does not seem to be valid').isEmail(),
@@ -254,7 +264,6 @@ app.put('/users/:_id', [
             username: req.body.username,
             password: hashedPassword,
             email: req.body.email,
-            birthday: req.body.birthday
         }
     },
         { new: true },
