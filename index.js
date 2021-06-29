@@ -39,7 +39,7 @@ const Genres = Models.Genre;
 
 app.use(express.static(__dirname + '/public'));
 //Mongoose middlewar body-parser
-mongoose.connect('mongodb+srv://EdisonAbdiel:114790931@moobee.zpfes.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://EdisonAbdiel:114790931@moobee.zpfes.mongodb.net/moobee?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Loggin
 app.use(morgan('common'));
