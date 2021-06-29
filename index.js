@@ -53,7 +53,7 @@ app.get('/documentation', (req, res) => {
     res.sendFile('public/documentation.html', { root: __dirname });
 });
 //Return a list of ALL movies to the user 
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies', (req, res) => {
     Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
@@ -86,7 +86,7 @@ app.get('/movies/:MovieID', passport.authenticate('jwt', { session: false }), (r
         });
 });
 //Return a movie by genre
-app.get('/movies/:genre', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies/:genre', (req, res) => {
     Movies.findOne({ genre: req.params.genre })
         .then((movie) => {
             res.json(movie);
@@ -108,7 +108,7 @@ app.get('/directors/:name', passport.authenticate('jwt', { session: false }), (r
         });
 });
 //Returns the full list of directors to the user ADD BACK THE PASSPORT AUTH
-app.get('/directors', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/directors', (req, res) => {
     Directors.find()
         .then((director) => {
             res.status(201).json(director);
@@ -119,7 +119,7 @@ app.get('/directors', passport.authenticate('jwt', { session: false }), (req, re
         });
 });
 //Return data from a specific genre
-app.get('/genres', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/genres', (req, res) => {
     Genres.find()
         .then((genre) => {
             res.status(201).json(genre);
