@@ -64,8 +64,8 @@ app.get('/movies', (req, res) => {
         });
 });
 //Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
-app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Movies.findOne({ title: req.params.title })
+app.get('/movies/:Title', (req, res) => {
+    Movies.findOne({ Title: req.params.Title })
         .then((movie) => {
             res.json(movie);
         })
